@@ -2,7 +2,7 @@
 #include <iostream>
 #include "point.hpp"
 void on_mouse(int event, int x, int y, int flags, void* param);
-int click::count = 0;
+
 
 int main()
 {
@@ -14,6 +14,9 @@ int main()
 		return -1;	
 	}
 	cv::namedWindow("img");
+	click c;
+
+	c.count = 0;
 	cv::setMouseCallback("img", on_mouse, &img);
 	cv::imshow("img", img);
 	cv::waitKey();
@@ -23,9 +26,10 @@ int main()
 
 void on_mouse(int event, int x, int y, int flags, void*param)
 {
+
 	cv::Mat img;
 	img = *(cv::Mat*)param;
-	click c;
+	
 	
 	cv::Point point;
 	point = cv::Point(x, y);
@@ -36,7 +40,7 @@ void on_mouse(int event, int x, int y, int flags, void*param)
 		std::cout << "LBUTTON UP : " << point.x << " " << point.y << std::endl;
 		c.count++;
 		std::cout << c.count << std::endl;
-		//c.line(&img, point);
+		c.line(&img, point);
 	}
 	//if (c.count % 4 == 1)
 	//{

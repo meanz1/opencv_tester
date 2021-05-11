@@ -5,7 +5,7 @@ class click {
 		
 	public:
 
-		static int count;
+		int count;
 		
 		cv::Point p1;
 		cv::Point p2;
