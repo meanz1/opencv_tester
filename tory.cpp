@@ -6,24 +6,23 @@ click c;
 
 int main()
 {
-	cv::Mat img = cv::imread("tory.jpg", cv::IMREAD_COLOR);
-	cv::Mat apple = cv::imread("apple.jpg", cv::IMREAD_COLOR);
-	cv::resize(apple, apple, cv::Size(img.cols, img.rows));
-	c.apple_clone = apple.clone();
-	//cv::Mat out = img.clone();
-	if (img.empty())
+	cv::Mat src_img = cv::imread("tory.jpg", cv::IMREAD_COLOR);
+	cv::Mat destination = cv::imread("apple.jpg", cv::IMREAD_COLOR);
+	cv::resize(destination, destination, cv::Size(src_img.cols, src_img.rows));
+	
+	if (src_img.empty())
 	{
 		std::cout << "Image load failed";
 		return -1;	
 	}
 	
-	cv::namedWindow("apple");
+	cv::namedWindow("destination");
 	
 
 	c.count = 0;
-	cv::setMouseCallback("apple", on_mouse, &apple);
+	cv::setMouseCallback("destination", on_mouse, &destination);
 	
-	cv::imshow("apple", apple);
+	cv::imshow("destination", destination);
 	cv::waitKey();
 
 	return 0;
