@@ -7,11 +7,19 @@ click a;
 
 int main()
 {
+	//cv::Mat src_img = cv::imread("tory.jpg", cv::IMREAD_COLOR);
 	cv::Mat src_img(1000, 1000, CV_8UC3, cv::Scalar(255, 255, 255));
 	cv::Mat destination = cv::imread("apple.jpg", cv::IMREAD_COLOR);
 	cv::resize(destination, destination, cv::Size(src_img.cols, src_img.rows));
 
+	//if (src_img.empty())
+	//{
+	//	std::cout << "Image load failed";
+	//	return -1;
+	//}
+
 	cv::namedWindow("destination");
+
 
 	a.count = 0;
 	cv::setMouseCallback("destination", on_mouse_q, &destination);
@@ -38,6 +46,7 @@ void on_mouse_q(int event, int x, int y, int flags, void* param)
 		std::cout << "LBUTTON UP : " << point.x << " " << point.y << std::endl;
 		a.count++;
 		std::cout << a.count << std::endl;
+		//cv::circle(img, point, 5, cv::Scalar(0, 255, 0), 2);
 		a.line(&img, point);
 	}
 

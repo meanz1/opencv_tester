@@ -2,7 +2,7 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc.hpp"
 #include "opencv2/core/core.hpp"
-
+#include <Windows.h>
 class click {
 
 public:
@@ -18,7 +18,15 @@ public:
 	{
 		std::string des = "HELLO";
 		cv::Mat src_img(1000, 1000, CV_8UC3, cv::Scalar(0, 0, 0));
-		cv::putText(src_img, des, cv::Point(80, 550), 0, 9, cv::Scalar(255, 0, 0), 15);
+		cv::Point flow = cv::Point(0, 550);
+		while (flow.x < 950) {
+			cv::putText(src_img, des, flow, 0, 9, cv::Scalar(255, 0, 0), 15);
+			cv::Mat src_img(1000, 1000, CV_8UC3, cv::Scalar(0, 0, 0));
+			//Sleep(1000);
+			flow.x++;
+			
+		}
+		cv::putText(src_img, des, flow, 0, 9, cv::Scalar(255, 0, 0), 15);
 		cv::Mat src_img_result(src_img.size(), CV_8UC3);
 
 		cv::Mat destination;
@@ -89,8 +97,8 @@ public:
 					}
 				}
 
-			//cv::imshow("src_img", src_img);
-			//cv::imshow("src_img_result", src_img_result);
+			cv::imshow("src_img", src_img);
+			cv::imshow("src_img_result", src_img_result);
 			cv::imshow("destination_result", destination_result);
 		}
 
