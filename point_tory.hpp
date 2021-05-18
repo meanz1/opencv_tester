@@ -35,6 +35,9 @@ class click {
 				p1.x = p.x;
 				p1.y = p.y;
 				std::cout << p1.x << " p1 " << p1.y << std::endl;
+				//std::string t1 = "p1";
+				//cv::putText(destination, t1, p1, 2, 3, cv::Scalar(0, 255, 0));
+				
 			}
 			if (count % 4 == 2)
 			{

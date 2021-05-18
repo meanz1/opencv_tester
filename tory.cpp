@@ -1,10 +1,10 @@
 #include "opencv2/opencv.hpp"
 #include <iostream>
-#include "point.hpp"
+#include "point_tory.hpp"
 void on_mouse(int event, int x, int y, int flags, void* param);
 click c;
 
-int main()
+int main_a()
 {
 	cv::Mat src_img = cv::imread("tory.jpg", cv::IMREAD_COLOR);
 	cv::Mat destination = cv::imread("apple.jpg", cv::IMREAD_COLOR);
