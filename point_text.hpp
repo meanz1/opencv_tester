@@ -3,6 +3,16 @@
 #include "opencv2/imgproc.hpp"
 #include "opencv2/core/core.hpp"
 #include <Windows.h>
+
+class origin_mat {
+	public :
+		cv::Mat origin;
+		
+		void ori() {
+			origin = cv::Mat(1000, 1000, CV_8UC3, cv::Scalar(0, 0, 0));
+		}
+};
+
 class click {
 
 public:
@@ -13,20 +23,13 @@ public:
 	cv::Point p2;
 	cv::Point p3;
 	cv::Point p4;
+	cv::Point flow;
 
 	void line(void* param, cv::Point p)
 	{
-		std::string des = "HELLO";
+		std::string des = "minji";
 		cv::Mat src_img(1000, 1000, CV_8UC3, cv::Scalar(0, 0, 0));
-		cv::Point flow = cv::Point(0, 550);
-		while (flow.x < 950) {
-			cv::putText(src_img, des, flow, 0, 9, cv::Scalar(255, 0, 0), 15);
-			cv::Mat src_img(1000, 1000, CV_8UC3, cv::Scalar(0, 0, 0));
-			//Sleep(1000);
-			flow.x++;
-			
-		}
-		cv::putText(src_img, des, flow, 0, 9, cv::Scalar(255, 0, 0), 15);
+		cv::Mat src_img_origin = src_img.clone();
 		cv::Mat src_img_result(src_img.size(), CV_8UC3);
 
 		cv::Mat destination;
@@ -63,43 +66,55 @@ public:
 			p4.x = p.x;
 			p4.y = p.y;
 			std::cout << p4.x << " p4 " << p4.y << std::endl;
+			click b;
+			flow = cv::Point(0, 550);
+			
+			while (flow.x < 100 ) {
+				origin_mat n;
+				n.ori();
+				cv::putText(n.origin, des, flow, 0, 9, cv::Scalar(255, 0, 0), 15);
+				
+				src[0] = cv::Point2f(p1.x, p1.y);
+				src[1] = cv::Point2f(p2.x, p2.y);
+				src[2] = cv::Point2f(p3.x, p3.y);
+				src[3] = cv::Point2f(p4.x, p4.y);
 
-			src[0] = cv::Point2f(p1.x, p1.y);
-			src[1] = cv::Point2f(p2.x, p2.y);
-			src[2] = cv::Point2f(p3.x, p3.y);
-			src[3] = cv::Point2f(p4.x, p4.y);
+				cv::Point2f temp_src[4], temp_dst[4];
 
-			cv::Point2f temp_src[4], temp_dst[4];
-
-			temp_src[0] = cv::Point2f(0, 0);
-			temp_src[1] = cv::Point2f(0, src_img.rows);
-			temp_src[2] = cv::Point2f(src_img.cols, src_img.rows);
-			temp_src[3] = cv::Point2f(src_img.cols, 0);
+				temp_src[0] = cv::Point2f(0, 0);
+				temp_src[1] = cv::Point2f(0, src_img.rows);
+				temp_src[2] = cv::Point2f(src_img.cols, src_img.rows);
+				temp_src[3] = cv::Point2f(src_img.cols, 0);
 
 
-			cv::Mat result = cv::getPerspectiveTransform(temp_src, src);
-			cv::warpPerspective(src_img, src_img_result, result, cv::Size(src_img.cols, src_img.rows));
+				cv::Mat result = cv::getPerspectiveTransform(temp_src, src);
+				cv::warpPerspective(n.origin, src_img_result, result, cv::Size(src_img.cols, src_img.rows));
 
-			for (int i = 0; i < src_img.cols; i++)
-				for (int j = 0; j < src_img.rows; j++)
-				{
-					if (src_img_result.at<cv::Vec3b>(j, i)[0] == 0 && src_img_result.at<cv::Vec3b>(j,i)[1] == 0 && src_img_result.at<cv::Vec3b>(j, i)[2] == 0)
+				for (int i = 0; i < src_img.cols; i++)
+					for (int j = 0; j < src_img.rows; j++)
 					{
-						destination_result.at<cv::Vec3b>(j, i)[0] = destination.at<cv::Vec3b>(j, i)[0];
-						destination_result.at<cv::Vec3b>(j, i)[1] = destination.at<cv::Vec3b>(j, i)[1];
-						destination_result.at<cv::Vec3b>(j, i)[2] = destination.at<cv::Vec3b>(j, i)[2];
+						if (src_img_result.at<cv::Vec3b>(j, i)[0] == 0 && src_img_result.at<cv::Vec3b>(j, i)[1] == 0 && src_img_result.at<cv::Vec3b>(j, i)[2] == 0)
+						{
+							destination_result.at<cv::Vec3b>(j, i)[0] = destination.at<cv::Vec3b>(j, i)[0];
+							destination_result.at<cv::Vec3b>(j, i)[1] = destination.at<cv::Vec3b>(j, i)[1];
+							destination_result.at<cv::Vec3b>(j, i)[2] = destination.at<cv::Vec3b>(j, i)[2];
+						}
+						else
+						{
+							destination_result.at<cv::Vec3b>(j, i)[0] = src_img_result.at<cv::Vec3b>(j, i)[0];
+							destination_result.at<cv::Vec3b>(j, i)[1] = src_img_result.at<cv::Vec3b>(j, i)[1];
+							destination_result.at<cv::Vec3b>(j, i)[2] = src_img_result.at<cv::Vec3b>(j, i)[2];
+						}
 					}
-					else
-					{
-						destination_result.at<cv::Vec3b>(j, i)[0] = src_img_result.at<cv::Vec3b>(j, i)[0];
-						destination_result.at<cv::Vec3b>(j, i)[1] = src_img_result.at<cv::Vec3b>(j, i)[1];
-						destination_result.at<cv::Vec3b>(j, i)[2] = src_img_result.at<cv::Vec3b>(j, i)[2];
-					}
-				}
+				
+				cv::imshow("src_img", n.origin);
+				cv::imshow("src_img_result", src_img_result);
+				cv::imshow("destination_result", destination_result);
+				flow.x++;
+				cv::waitKey(1);
+				
 
-			cv::imshow("src_img", src_img);
-			cv::imshow("src_img_result", src_img_result);
-			cv::imshow("destination_result", destination_result);
+			}
 		}
 
 	}
