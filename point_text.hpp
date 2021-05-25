@@ -69,7 +69,8 @@ public:
 			click b;
 			flow = cv::Point(0, 550);
 			
-			while (flow.x < 100 ) {
+			while (flow.x < 500 ) {
+				std::cout << flow.x << "  " << std::endl;
 				origin_mat n;
 				n.ori();
 				cv::putText(n.origin, des, flow, 0, 9, cv::Scalar(255, 0, 0), 15);
