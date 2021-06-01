@@ -29,9 +29,9 @@ int main()
 	cv::imshow("destination", destination);
 	cv::waitKey();
 	cv::setMouseCallback("destination", on_mouse, &destination);
-	while(1)
-	{
-		if (n.count == 4)
+	//while(1)
+	//{
+		if (n.count == 0)
 		{
 			std::string des = "minji";
 
@@ -80,13 +80,10 @@ int main()
 				n.flow.x++;
 				cv::waitKey(1);
 			}
+			
 		}
-		Sleep(10);
-	}
-	
-	
-	
-
+		//Sleep(10);
+	//}
 	return 0;
 }
 
