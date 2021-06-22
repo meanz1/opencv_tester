@@ -1,0 +1,3 @@
+/Users/minji/Desktop/opencv_tester/CMakeFiles/rebuild_cache.dir
+/Users/minji/Desktop/opencv_tester/CMakeFiles/edit_cache.dir
+/Users/minji/Desktop/opencv_tester/CMakeFiles/opencv_tester.dir

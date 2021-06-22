@@ -14,21 +14,21 @@ int main()
 {
 	cv::Mat img = cv::imread("apple.jpg");
 	
-	cv::resize(img, img, cv::Size(1000, 1000));
+	cv::resize(img, img, cv::Size(500, 500));
 	cv::Mat img_gray;
 	cv::cvtColor(img, img_gray, cv::COLOR_BGR2GRAY);
 
 	cv::Mat img_canny;
 	Canny(img_gray, img_canny, 100, 700);
-	// ¼¼¹øÂ°, ³×¹øÂ° ÀÎÀÚ : low ÀÓ°è°ª, high ÀÓ°è°ª
-	// low ÀÓ°è°ªº¸´Ù ÀÛ°í, high ÀÓ°è°ª º¸´Ù Å¬ ¶§ edge·Î ÀÎ½ÄÇÔ.
-	// high ÀÓ°è°ªÀÌ Å¬¼ö·Ï(Àû´çÈ÷) Á÷¼±ÀÌ ±ò²ûÇÏ°Ô °ËÃâµÇ´Â °Í °°´Ù.
+	// ï¿½ï¿½ï¿½ï¿½Â°, ï¿½×¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ : low ï¿½Ó°è°ª, high ï¿½Ó°è°ª
+	// low ï¿½Ó°è°ªï¿½ï¿½ï¿½ï¿½ ï¿½Û°ï¿½, high ï¿½Ó°è°ª ï¿½ï¿½ï¿½ï¿½ Å¬ ï¿½ï¿½ edgeï¿½ï¿½ ï¿½Î½ï¿½ï¿½ï¿½.
+	// high ï¿½Ó°è°ªï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 
 	std::vector<cv::Vec2f> lines;
 	
 	cv::HoughLines(img_canny, lines, 1, CV_PI / 180, 150);
-	// Á¦ÀÏ ¸¶Áö¸· ÀÎÀÚ(150) : ±³Á¡ÀÇ °¹¼ö
-	// ÀÛÀ»¼ö·Ï ´õ ¸¹Àº ¼±ÀÌ °ËÃâ
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(150) : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	cv::Mat img_hough;
 	img.copyTo(img_hough);
 	cv::Mat img_lane;
@@ -56,7 +56,7 @@ int main()
 			pointLine_a.push_back(pt1);
 			pointLine_b.push_back(pt2);
 
-			double alp = (double)(pointLine_b[i].y - pointLine_a[i].y) / (double)(pointLine_b[i].x - pointLine_a[i].x); // ±â¿ï±â, °­Á¦Ä³½ºÆÃÇØÁà¾ßÇÔ
+			double alp = (double)(pointLine_b[i].y - pointLine_a[i].y) / (double)(pointLine_b[i].x - pointLine_a[i].x); // ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			double bet = pointLine_a[i].y - alp * pointLine_a[i].x;
 
 			alpha.push_back(alp);
